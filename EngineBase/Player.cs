@@ -93,9 +93,19 @@ namespace IceThermical.EngineBase
 
 			KeyboardIN.GetState();
 
+			var padState = GamePad.GetState(PlayerIndex.One);
+
 			wishDir = Vector3.Zero;
-			
-			if(KeyboardIN.IsPressed(Keys.W))
+
+			wishDir.X = padState.ThumbSticks.Left.X * -5;
+			wishDir.Z = padState.ThumbSticks.Left.Y * 5;
+
+			rot.X += padState.ThumbSticks.Right.X * -5;
+			rot.Y+= padState.ThumbSticks.Right.Y * -5;
+			smoothRot.X += padState.ThumbSticks.Right.X * -5;
+			smoothRot.Y += padState.ThumbSticks.Right.Y * -5;
+
+			if (KeyboardIN.IsPressed(Keys.W))
 			{
 				wishDir.Z = 5;
 			}
@@ -111,7 +121,7 @@ namespace IceThermical.EngineBase
 			{
 				wishDir.X = -5;
 			}
-			if (KeyboardIN.IsPressed(Keys.Space) && grounded)
+			if ((KeyboardIN.IsPressed(Keys.Space) || padState.IsButtonDown(Buttons.A)) && grounded)
 			{
 				gravity = -3f;
 				position.Y += 0.04f;
@@ -120,7 +130,7 @@ namespace IceThermical.EngineBase
 
 			camera.viewMatrix = Matrix.CreateLookAt(camera.camPos, camera.lookTarget, Vector3.Up) * Matrix.CreateFromYawPitchRoll(0, 0, (velocity.Length() * -0.002f) * wishDir.X / 5);
 
-			if (KeyboardIN.IsPressed(Keys.LeftControl))
+			if (KeyboardIN.IsPressed(Keys.LeftControl) || padState.IsButtonDown(Buttons.B))
 			{
 				bool needsReconstruction = extents != new Vector3(0.25f,0.25f,0.25f);
 
@@ -155,8 +165,8 @@ namespace IceThermical.EngineBase
 
 
 
-			wishDir = Vector3.Clamp(wishDir,-Vector3.One*1.4f * (crouching? 0.5f:(KeyboardIN.IsPressed(Keys.LeftShift) ? 2 : 1)),
-											Vector3.One*1.4f * (crouching ? 0.5f: (KeyboardIN.IsPressed(Keys.LeftShift) ? 2 : 1)));
+			wishDir = Vector3.Clamp(wishDir,-Vector3.One*1.4f * (crouching? 0.5f:((KeyboardIN.IsPressed(Keys.LeftShift) || padState.IsButtonDown(Buttons.LeftStick)) ? 2 : 1)),
+											Vector3.One*1.4f * (crouching ? 0.5f: ((KeyboardIN.IsPressed(Keys.LeftShift) || padState.IsButtonDown(Buttons.LeftStick)) ? 2 : 1)));
 
 
 
