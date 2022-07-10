@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/Arms.png</File>
+    <File>C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/Lightmap_02.png</File>
+    <File>C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/missing.png</File>
+    <File>F:/dumbarm.dae</File>
+    <File>F:/testlevel.dae</File>
+    <File>C:/Users/tidwe/source/repos/IceThermical/Content/Models/untitled.dae</File>
+    <File>C:/Users/tidwe/source/repos/IceThermical/Content/Shaders/Textured.fx</File>
+    <File>C:/Users/tidwe/source/repos/IceThermical/Content/Textures/bricktest.png</File>
+    <File>C:/Users/tidwe/source/repos/IceThermical/Content/Textures/UVGrid.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File>Textures/Arms.png</File>
+    <File>Textures/Lightmap_02.png</File>
+    <File>Textures/missing.png</File>
+    <File>Models/dumbarm.dae</File>
+    <File>Models/testlevel.dae</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

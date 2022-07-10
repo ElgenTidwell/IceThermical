@@ -1,0 +1,10 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/Arms.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Textures/Arms.xnb","TextureProcessor","Texture2DContent",62033,53518,0.1956672
+"C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/Lightmap_02.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Textures/Lightmap_02.xnb","TextureProcessor","Texture2DContent",27465,37870,0.12059
+"C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/missing.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Textures/missing.xnb","TextureProcessor","Texture2DContent",460,8379,0.0608828
+"C:/Users/tidwe/source/repos/IceThermical/Content/Models/untitled.dae","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Models/untitled.xnb","ModelProcessor","ModelContent",7743,1590,0.0086305
+"C:/Users/tidwe/source/repos/IceThermical/Content/Shaders/Textured.fx","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Shaders/Textured.xnb","EffectProcessor","CompiledEffectContent",2411,1893,0.4029989
+"C:/Users/tidwe/source/repos/IceThermical/Content/Textures/bricktest.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Textures/bricktest.xnb","TextureProcessor","Texture2DContent",718,1342,0.0025918
+"C:/Users/tidwe/source/repos/IceThermical/Content/Textures/UVGrid.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Textures/UVGrid.xnb","TextureProcessor","Texture2DContent",40135,22411,0.1834459
+"F:/dumbarm.dae","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Models/dumbarm.xnb","ModelProcessor","ModelContent",95738,22180,0.1061734
+"F:/testlevel.dae","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Models/testlevel.xnb","ModelProcessor","ModelContent",2563584,545759,0.2622018
