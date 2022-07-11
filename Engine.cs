@@ -1,4 +1,5 @@
 ﻿using IceThermical.EngineBase;
+using IceThermical.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,11 +20,12 @@ namespace IceThermical
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 		private Vector2 rotation;
-		private Player player;
+		public Player player;
 		public Texture2D tex;
 		RenderTarget2D baseTarget;
+		LoadedITM mapReader;
 
-		private ITStaticModel model;
+		bool VisCollision = true;
 
 		public void AddBox(BoundingBox box)
 		{
@@ -46,7 +48,8 @@ namespace IceThermical
 			_graphics.PreferredBackBufferWidth = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width);
 			_graphics.PreferredBackBufferHeight = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
 			_graphics.PreferredBackBufferFormat = SurfaceFormat.Rgba64;
-			_graphics.IsFullScreen = true;
+			_graphics.IsFullScreen = false;
+			Window.IsBorderless = true;
 			_graphics.GraphicsProfile = GraphicsProfile.Reach;
 
 			_graphics.ApplyChanges();
@@ -59,17 +62,10 @@ namespace IceThermical
 
 		protected override void LoadContent()
 		{
+			mapReader = new LoadedITM();
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			model = new ITStaticModel();
-			model.model = Content.Load<Model>("Models/testlevel");
-			model.modelTexture = Content.Load<Texture2D>("Textures/Lightmap_02");
-			model.pos = Vector3.Forward*-4;
-
-			OrientedBoundingBox obb = new OrientedBoundingBox(Vector3.Left*6,new Vector3(15 * MathF.PI/180,0,0),20,5,3);
-			orientedBoxes.Add(obb);
-
-			model.init();
+			mapReader.LoadMap("Maps/map");
 
 			tex = Content.Load<Texture2D>("Textures/missing");
 		}
@@ -114,7 +110,54 @@ namespace IceThermical
 
 			GraphicsDevice.Clear(new Color(0, 0, 0, 0));
 			player.camera.PrepareRender(gameTime,GraphicsDevice);
-			model.Render(player.camera, tex);
+			//model.Render(player.camera, tex);
+			mapReader.RenderMap(player.camera,GraphicsDevice);
+
+			if(VisCollision)
+			{
+				BasicEffect effect = new BasicEffect(GraphicsDevice);
+				effect.World = player.camera.worldMatrix;
+				effect.View = player.camera.viewMatrix;
+				effect.Projection = player.camera.projectionMatrix;
+				foreach (BoundingBox box in boxes)
+				{
+					VertexPosition[] c = new VertexPosition[8];
+
+					float l, w, h;
+					int i = 0;
+					foreach(Vector3 vec in box.GetCorners())
+					{
+						c[i] = new VertexPosition(vec);
+						i++;
+					}
+
+
+					//4) Define the vertices that the cube is composed of:
+					//I have used 16 vertices (4 vertices per side). 
+					//This is because I want the vertices of each side to have separate normals.
+					//(so the object renders light/shade correctly) 
+					VertexPosition[] verts = new VertexPosition[]
+					{
+						c[0], c[1], c[2], c[3], // Bottom
+						c[7], c[4], c[0], c[3], // Left
+						c[4], c[5], c[1], c[0], // Front
+						c[6], c[7], c[3], c[2], // Back
+						c[5], c[6], c[2], c[1], // Right
+						c[7], c[6], c[5], c[4]  // Top
+					};
+
+					VertexBuffer buffer = new VertexBuffer(GraphicsDevice,typeof(VertexPosition), verts.Length, BufferUsage.WriteOnly);
+					buffer.SetData(verts);
+
+					GraphicsDevice.SetVertexBuffer(buffer);
+
+					foreach(EffectPass pass in effect.CurrentTechnique.Passes)
+					{
+						pass.Apply();
+						GraphicsDevice.DrawPrimitives(PrimitiveType.LineList,0, verts.Length);
+					}
+				}
+			}
 
 			player.RenderViewModel();
 

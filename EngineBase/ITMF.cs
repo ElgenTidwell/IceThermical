@@ -9,39 +9,50 @@ namespace IceThermical.Map
 	public class LoadedITM
 	{
 		List<Tuple<BoundingBox,VertexPositionNormalTexture[]>> brushes = new List<Tuple<BoundingBox, VertexPositionNormalTexture[]>>();
-
+		Effect effect;
+		Texture2D uvgrid;
 		public void LoadMap(string path)
 		{
+			effect = Engine.instance.Content.Load<Effect>("Shaders/Textured");
+			uvgrid = Engine.instance.Content.Load<Texture2D>("Textures/UVGrid");
 			ITMF map = Engine.instance.Content.Load<ITMF>(path);
 
-			foreach(Brush brush in map.brushes)
+			//effect.Parameters["DiffuseLightDirection"].SetValue(over);
+
+			effect.Parameters["AmbientColor"].SetValue(Color.LightBlue.ToVector4());
+			effect.Parameters["AmbientIntensity"].SetValue(0.02f);
+			effect.Parameters["DiffuseLightDirection"].SetValue(new Vector3(0.8f, 0.8f, 0.8f));
+			effect.Parameters["DiffuseColor"].SetValue(Color.White.ToVector4());
+			effect.Parameters["DiffuseIntensity"].SetValue(1.0f);
+			effect.Parameters["SpecularIntensity"].SetValue(0.0f);
+
+			foreach (Brush brush in map.brushes)
 			{
 				if(brush.rotX == 0 && brush.rotY == 0 && brush.rotZ == 0)
 				{
 					BoundingBox box = new BoundingBox();
-					box.Min = new Vector3(brush.centerX, brush.centerY, brush.centerZ) - new Vector3(brush.height / 2, brush.length / 2, brush.width / 2);
-					box.Max = new Vector3(brush.centerX, brush.centerY, brush.centerZ) + new Vector3(brush.height / 2, brush.length / 2, brush.width / 2);
+					box.Min = new Vector3(brush.centerX, brush.centerY, brush.centerZ) - new Vector3(brush.length / 2, brush.width / 2, brush.height / 2);
+					box.Max = new Vector3(brush.centerX, brush.centerY, brush.centerZ) + new Vector3(brush.length / 2, brush.width / 2, brush.height / 2);
 					Engine.instance.boxes.Add(box);
 				}
 				else
 				{
 					OrientedBoundingBox box = new OrientedBoundingBox(new Vector3(brush.centerX, brush.centerY, brush.centerZ),
-						new Vector3(brush.rotX, brush.rotY, brush.rotZ), brush.height / 2, brush.length / 2, brush.width / 2);
+						new Vector3(brush.rotX, brush.rotY, brush.rotZ), brush.length / 2, brush.width / 2, brush.height / 2);
 					Engine.instance.orientedBoxes.Add(box);
 				}
 
 				if (brush.invis) continue;
 
 				BoundingBox bbox = new BoundingBox();
-				bbox.Min = new Vector3(brush.centerX, brush.centerY, brush.centerZ) - new Vector3(brush.height / 2, brush.length / 2, brush.width / 2);
-				bbox.Max = new Vector3(brush.centerX, brush.centerY, brush.centerZ) + new Vector3(brush.height / 2, brush.length / 2, brush.width / 2);
+				bbox.Min = new Vector3(brush.centerX, brush.centerY, brush.centerZ) - new Vector3(brush.length / 2, brush.width / 2, brush.height / 2);
+				bbox.Max = new Vector3(brush.centerX, brush.centerY, brush.centerZ) + new Vector3(brush.length / 2, brush.width / 2, brush.height / 2);
 
 				VertexPositionNormalTexture[] verts=new VertexPositionNormalTexture[brush.triangles.Length];
-				int i = 0;
-				foreach (int tri in brush.triangles)
+				for(int i = 0; i < brush.triangles.Length; i ++)
 				{
-					verts[i] = new VertexPositionNormalTexture(brush.vertices[tri], brush.normals[tri], brush.uvs[tri]);
-					i++;
+					verts[i] = new VertexPositionNormalTexture(brush.vertices[brush.triangles[i]] + new Vector3(brush.centerX, brush.centerY, brush.centerZ),
+										brush.normals[brush.triangles[i]], brush.uvs[brush.triangles[i]]);
 				}
 				brushes.Add(Tuple.Create(bbox,verts));
 			}
@@ -50,17 +61,44 @@ namespace IceThermical.Map
 		{
 			if (brushes.Count == 0) return;
 
-			for(int i = 0; i < brushes.Count; i ++)
+			effect.Parameters["World"].SetValue(cam.worldMatrix);
+			effect.Parameters["View"].SetValue(cam.viewMatrix);
+			effect.Parameters["Projection"].SetValue(cam.projectionMatrix);
+
+			Matrix worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(cam.worldMatrix));
+
+			effect.Parameters["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix);
+
+			Vector3 viewVector = Vector3.Transform(Engine.instance.player.camera.lookTarget - Engine.instance.player.camera.camPos, Matrix.CreateRotationY(0));
+			viewVector.Normalize();
+
+			effect.Parameters["ViewVector"].SetValue(viewVector);
+
+			RasterizerState state = new RasterizerState();
+			state.CullMode = CullMode.CullClockwiseFace;
+
+			RasterizerState _old = gd.RasterizerState;
+
+			gd.RasterizerState = state;
+
+			for (int i = 0; i < brushes.Count; i ++)
 			{
-				if (Vector3.Dot(cam.camPos - brushes[i].Item1.Min, cam.forward) < 1) continue;
+				if (Vector3.Dot(cam.camPos - brushes[i].Item1.Min, cam.forward) > .5f && Vector3.Dot(cam.camPos - brushes[i].Item1.Max, cam.forward) > .5f) continue;
 
 				VertexBuffer buffer = new VertexBuffer(gd, typeof(VertexPositionNormalTexture),brushes[i].Item2.Length,BufferUsage.WriteOnly);
 				buffer.SetData(brushes[i].Item2);
 
 				gd.SetVertexBuffer(buffer);
-				gd.DrawPrimitives(PrimitiveType.TriangleList,0,buffer.VertexCount);
-				gd.SetVertexBuffer(null);
+				effect.Parameters["ModelTexture"].SetValue(uvgrid);
+
+				foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+				{
+					pass.Apply();
+					gd.DrawPrimitives(PrimitiveType.TriangleList, 0, brushes[i].Item2.Length);
+				}
 			}
+
+			gd.RasterizerState = _old;
 		}
 	}
 

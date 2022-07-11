@@ -37,3 +37,4 @@ C:\Users\tidwe\source\repos\IceThermical\bin\Release\netcoreapp3.1\MonoGame.Exte
 C:\Users\tidwe\source\repos\IceThermical\bin\Release\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\tidwe\source\repos\IceThermical\bin\Release\netcoreapp3.1\Content\Textures\Arms.xnb
 C:\Users\tidwe\source\repos\IceThermical\bin\Release\netcoreapp3.1\Content\Maps\poo sequel.xnb
+C:\Users\tidwe\source\repos\IceThermical\bin\Release\netcoreapp3.1\Content\Maps\map.xnb

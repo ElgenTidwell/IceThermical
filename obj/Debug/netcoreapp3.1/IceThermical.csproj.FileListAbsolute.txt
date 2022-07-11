@@ -35,3 +35,6 @@ C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Newtonsoft.Json
 C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Shaders\Textured.xnb
 C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Textures\missing.xnb
 C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Textures\Lightmap_02.xnb
+C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Maps\map.xnb
+C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Maps\poo sequel.xnb
+C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Textures\Arms.xnb
