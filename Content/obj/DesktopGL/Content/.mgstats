@@ -1,4 +1,5 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/tidwe/source/repos/IceThermical/Content/../../../../AppData/LocalLow/DefaultCompany/ITLevelEditor/map.json","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Maps/map.xnb","JsonContentProcessor","JsonContentProcessorResult",86892,2266,0.114801
 "C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/Arms.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Textures/Arms.xnb","TextureProcessor","Texture2DContent",62033,53518,0.221503
 "C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/Lightmap_02.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Textures/Lightmap_02.xnb","TextureProcessor","Texture2DContent",27465,37870,0.2153783
 "C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/missing.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Textures/missing.xnb","TextureProcessor","Texture2DContent",460,8379,0.21573

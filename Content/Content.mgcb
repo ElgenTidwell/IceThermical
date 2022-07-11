@@ -14,6 +14,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../../../AppData/LocalLow/DefaultCompany/ITLevelEditor/map.json
+/importer:JsonContentImporter
+/processor:JsonContentProcessor
+/processorParam:ContentType=IceThermical.EngineBase.ITMFReader, IceThermical
+/build:../../../../AppData/LocalLow/DefaultCompany/ITLevelEditor/map.json;Maps/map.json
+
 #begin ../../../../OneDrive/Documents/Arms.png
 /importer:TextureImporter
 /processor:TextureProcessor

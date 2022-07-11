@@ -9,7 +9,7 @@ namespace IceThermical.EngineBase
 		public Model model;
 		public Vector3 pos,rot;
 		List<BoundingBox> boundingBoxes;
-		List<OrientedBoundingBox> OBBS;
+		List<OrientedBoundingBox> OBBS; //WIP
 		Effect effect;
 		public float Shine = 200f, ShineScale = 0f;
 		public Texture2D modelTexture;

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace IceThermical.EngineBase
 {
@@ -15,6 +13,7 @@ namespace IceThermical.EngineBase
 		protected BoundingBox box;
 
 		public bool grounded = false;
+		public bool isStatic = false;
 
 		public virtual void Start() 
 		{
@@ -27,7 +26,8 @@ namespace IceThermical.EngineBase
 		}
 		public virtual void Update(GameTime gt) 
 		{
-			RunPhysics(gt);
+			if(!isStatic)
+				RunPhysics(gt);
 			//Update pos
 
 			float x = MathF.Sin((rotation.Y) * MathF.PI / 180) * MathF.Cos((rotation.X) * MathF.PI / 180);
@@ -42,7 +42,8 @@ namespace IceThermical.EngineBase
 
 			right = new Vector3(x, y, z);
 
-			CollisionCheck(gt);
+			if(!isStatic)
+				CollisionCheck(gt);
 		}
 		public virtual void RunPhysics(GameTime gt)
 		{

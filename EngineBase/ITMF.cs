@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
-using System.IO;
 using Microsoft.Xna.Framework;
 using IceThermical.EngineBase;
 
@@ -82,9 +79,9 @@ namespace IceThermical.Map
 		public float rotX, rotY, rotZ;
 		public int texID;
 		public bool invis;
-		public Vector2[] uvs;
-		public Vector3[] normals;
-		public Vector3[] vertices;
+		public Vec2[] uvs;
+		public Vec3[] normals;
+		public Vec3[] vertices;
 		public int[] triangles;
 	}
 	[System.Serializable]
@@ -93,5 +90,45 @@ namespace IceThermical.Map
 		public int pointer;
 		public float posX, posY, posZ;
 		public string[] data;
+	}
+}
+[System.Serializable]
+public struct Vec3
+{
+	public float X, Y, Z;
+
+	public Vec3(float x, float y, float z)
+	{
+		this.X = x;
+		this.Y = y;
+		this.Z = z;
+	}
+
+	public static implicit operator Vector3(Vec3 other)
+	{
+		return new Vector3(other.X, other.Y, other.Z);
+	}
+	public static implicit operator Vec3(Vector3 other)
+	{
+		return new Vec3(other.X, other.Y, other.Z);
+	}
+}
+[System.Serializable]
+public struct Vec2
+{
+	public float X, Y;
+	public Vec2(float x, float y)
+	{
+		this.X = x;
+		this.Y = y;
+	}
+
+	public static implicit operator Vector2(Vec2 other)
+	{
+		return new Vector2(other.X, other.Y);
+	}
+	public static implicit operator Vec2(Vector2 other)
+	{
+		return new Vec2(other.X, other.Y);
 	}
 }
