@@ -25,7 +25,7 @@ namespace IceThermical
 		RenderTarget2D baseTarget;
 		LoadedITM mapReader;
 
-		bool VisCollision = true;
+		bool VisCollision = false;
 
 		public void AddBox(BoundingBox box)
 		{
@@ -103,12 +103,10 @@ namespace IceThermical
 
 		protected override void Draw(GameTime gameTime)
 		{
-			SamplerState ss = new SamplerState();
-			ss.Filter = TextureFilter.Linear;
-			ss.FilterMode = TextureFilterMode.Comparison;
-			GraphicsDevice.SamplerStates[0] = ss;
+			GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
 			GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+
 			player.camera.PrepareRender(gameTime,GraphicsDevice);
 			//model.Render(player.camera, tex);
 			mapReader.RenderMap(player.camera,GraphicsDevice);

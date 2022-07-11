@@ -16,7 +16,7 @@ namespace IceThermical.Map
 			effect = Engine.instance.Content.Load<Effect>("Shaders/Textured");
 			uvgrid = Engine.instance.Content.Load<Texture2D>("Textures/UVGrid");
 			ITMF map = Engine.instance.Content.Load<ITMF>(path);
-
+			
 			//effect.Parameters["DiffuseLightDirection"].SetValue(over);
 
 			effect.Parameters["AmbientColor"].SetValue(Color.LightBlue.ToVector4());
@@ -83,7 +83,7 @@ namespace IceThermical.Map
 
 			for (int i = 0; i < brushes.Count; i ++)
 			{
-				if (Vector3.Dot(cam.camPos - brushes[i].Item1.Min, cam.forward) > .5f && Vector3.Dot(cam.camPos - brushes[i].Item1.Max, cam.forward) > .5f) continue;
+				//if (Vector3.Dot(cam.camPos - brushes[i].Item1.Min, cam.forward) > .5f && Vector3.Dot(cam.camPos - brushes[i].Item1.Max, cam.forward) > .5f) continue;
 
 				VertexBuffer buffer = new VertexBuffer(gd, typeof(VertexPositionNormalTexture),brushes[i].Item2.Length,BufferUsage.WriteOnly);
 				buffer.SetData(brushes[i].Item2);
