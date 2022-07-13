@@ -9,7 +9,7 @@ namespace IceThermical.EngineBase
 		public Matrix orientation;
 		public Vector3 extents;
 
-		public OrientedBoundingBox(Vector3 p, Vector3 r, float l, float w, float h)
+		public OrientedBoundingBox(Vector3 p, Vector3 r, float w, float h, float l)
 		{
 			pos = p;
 			rot = r;

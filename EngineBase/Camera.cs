@@ -19,7 +19,7 @@ namespace IceThermical.EngineBase
 		public void Initialize(GraphicsDevice d)
 		{
 			lookTarget = new Vector3(0, 0, 0);
-			camPos = new Vector3(0, 0.8f, 0);
+			camPos = new Vector3(0, 0.6f, 0);
 
 			projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(90f), d.DisplayMode.AspectRatio, 0.1f, 300f);
 			viewMatrix = Matrix.CreateFromYawPitchRoll(lookTarget.X, lookTarget.Y, lookTarget.Z);

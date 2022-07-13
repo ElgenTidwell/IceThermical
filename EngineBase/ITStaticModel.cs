@@ -13,10 +13,17 @@ namespace IceThermical.EngineBase
 		Effect effect;
 		public float Shine = 200f, ShineScale = 0f;
 		public Texture2D modelTexture;
+		Texture2D lightTexture;
 
 		public ITStaticModel()
 		{
 			effect = Engine.instance.Content.Load<Effect>("Shaders/Textured");
+			lightTexture = new Texture2D(Engine.instance.GraphicsDevice,1,1);
+
+			Color[] colors = new Color[1];
+			colors[0] = new Color(255, 255, 255);
+
+			lightTexture.SetData(colors);
 		}
 
 		public void init()
@@ -102,6 +109,7 @@ namespace IceThermical.EngineBase
 					//effect.Parameters["DiffuseLightDirection"].SetValue(over);
 
 					effect.Parameters["ModelTexture"].SetValue(modelTexture == null ? missing:modelTexture);
+					effect.Parameters["LightMap"].SetValue(lightTexture);
 
 					effect.Parameters["AmbientColor"].SetValue(Color.LightBlue.ToVector4());
 					effect.Parameters["AmbientIntensity"].SetValue(0.02f);

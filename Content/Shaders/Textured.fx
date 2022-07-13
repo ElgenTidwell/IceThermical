@@ -16,8 +16,16 @@ float SpecularIntensity = 1;
 float3 ViewVector = float3(1, 0, 0);
  
 texture ModelTexture;
+texture LightMap;
 sampler2D textureSampler = sampler_state {
     Texture = (ModelTexture);
+    MinFilter = Linear;
+    MagFilter = Linear;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
+sampler2D lightMapSampler = sampler_state {
+    Texture = (LightMap);
     MinFilter = Linear;
     MagFilter = Linear;
     AddressU = Clamp;
@@ -71,7 +79,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : SV_TARGET0
  
     float4 specular = SpecularIntensity * SpecularColor * max(pow(abs(dotProduct), Shininess), 0) * length(input.Color);
  
-    float4 textureColor = tex2D(textureSampler, input.TextureCoordinate);
+    float4 textureColor = tex2D(textureSampler, input.TextureCoordinate) * tex2D(lightMapSampler, input.TextureCoordinate);
     textureColor.a = 1;
  
     return saturate(textureColor * (input.Color) + AmbientColor * AmbientIntensity + specular);

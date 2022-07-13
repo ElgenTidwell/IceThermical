@@ -38,3 +38,5 @@ C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Texture
 C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Maps\map.xnb
 C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Maps\poo sequel.xnb
 C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Textures\Arms.xnb
+C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Audio\Music\bleepbloopy.ogg
+C:\Users\tidwe\source\repos\IceThermical\bin\Debug\netcoreapp3.1\Content\Audio\Music\bleepbloopy.xnb

@@ -8,6 +8,7 @@
     <File>C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/Arms.png</File>
     <File>C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/Lightmap_02.png</File>
     <File>C:/Users/tidwe/source/repos/IceThermical/Content/../../../../OneDrive/Documents/missing.png</File>
+    <File>E:/bleepbloopy.ogg</File>
     <File>F:/dumbarm.dae</File>
     <File>F:/testlevel.dae</File>
     <File>C:/Users/tidwe/source/repos/IceThermical/Content/Maps/poo sequel.json</File>
@@ -21,6 +22,7 @@
     <File>Textures/Arms.png</File>
     <File>Textures/Lightmap_02.png</File>
     <File>Textures/missing.png</File>
+    <File>Audio/Music/bleepbloopy.ogg</File>
     <File>Models/dumbarm.dae</File>
     <File>Models/testlevel.dae</File>
     <File xsi:nil="true" />

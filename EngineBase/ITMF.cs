@@ -11,10 +11,17 @@ namespace IceThermical.Map
 		List<Tuple<BoundingBox,VertexPositionNormalTexture[]>> brushes = new List<Tuple<BoundingBox, VertexPositionNormalTexture[]>>();
 		Effect effect;
 		Texture2D uvgrid;
+		Texture2D lightMap;
 		public void LoadMap(string path)
 		{
 			effect = Engine.instance.Content.Load<Effect>("Shaders/Textured");
 			uvgrid = Engine.instance.Content.Load<Texture2D>("Textures/UVGrid");
+			lightMap = new Texture2D(Engine.instance.GraphicsDevice, 1, 1);
+
+			Color[] colors = new Color[1];
+			colors[0] = new Color(255, 255, 255);
+
+			lightMap.SetData(colors);
 			ITMF map = Engine.instance.Content.Load<ITMF>(path);
 			
 			//effect.Parameters["DiffuseLightDirection"].SetValue(over);
@@ -38,7 +45,7 @@ namespace IceThermical.Map
 				else
 				{
 					OrientedBoundingBox box = new OrientedBoundingBox(new Vector3(brush.centerX, brush.centerY, brush.centerZ),
-						new Vector3(brush.rotX, brush.rotY, brush.rotZ), brush.length / 2, brush.width / 2, brush.height / 2);
+						new Vector3(brush.rotX, brush.rotY, brush.rotZ), brush.length, brush.width, brush.height);
 					Engine.instance.orientedBoxes.Add(box);
 				}
 
@@ -80,6 +87,7 @@ namespace IceThermical.Map
 			RasterizerState _old = gd.RasterizerState;
 
 			gd.RasterizerState = state;
+			gd.SamplerStates[0] = SamplerState.LinearWrap;
 
 			for (int i = 0; i < brushes.Count; i ++)
 			{
@@ -90,6 +98,7 @@ namespace IceThermical.Map
 
 				gd.SetVertexBuffer(buffer);
 				effect.Parameters["ModelTexture"].SetValue(uvgrid);
+				effect.Parameters["LightMap"].SetValue(lightMap);
 
 				foreach (EffectPass pass in effect.CurrentTechnique.Passes)
 				{

@@ -41,8 +41,8 @@ namespace IceThermical.EngineBase
 
 		public override void Start()
 		{
-			extents = new Vector3(0.25f,0.5f,0.25f);
-			boxOffset = Vector3.Down * 0.4f;
+			extents = new Vector3(0.25f,1f,0.25f);
+			boxOffset = Vector3.Down * 0.3f;
 			camera = new Camera();
 			camera.Initialize(Engine.instance.GraphicsDevice);
 			position = -Vector3.One*100;
@@ -53,6 +53,7 @@ namespace IceThermical.EngineBase
 			model.Shine = 10f;
 			model.ShineScale = 0.0f;
 			model.modelTexture = Engine.instance.Content.Load<Texture2D>("Textures/Arms");
+			Engine.instance.TargetElapsedTime = TimeSpan.FromSeconds(1d / 250d);
 		}
 		public override void Update(GameTime gt)
 		{
@@ -60,18 +61,18 @@ namespace IceThermical.EngineBase
 			MouseState state = Mouse.GetState();
 
 			Point mouseRelativeToCenter = new Point(state.X - Engine.instance.GraphicsDevice.Viewport.Width / 2, state.Y - Engine.instance.GraphicsDevice.Viewport.Height / 2);
-			
+
 			if(!paused)
 			{
-				rot.X += -mouseRelativeToCenter.X * 20f * (float)gt.ElapsedGameTime.TotalSeconds;
-				rot.Y += mouseRelativeToCenter.Y * 20f * (float)gt.ElapsedGameTime.TotalSeconds;
+				rot.X += -mouseRelativeToCenter.X * 0.2f;
+				rot.Y += mouseRelativeToCenter.Y * 0.2f;
 
 				smoothRot.X += mouseRelativeToCenter.X * 10f * (float)gt.ElapsedGameTime.TotalSeconds;
 				smoothRot.Y += mouseRelativeToCenter.Y * 10f * (float)gt.ElapsedGameTime.TotalSeconds;
 
 				Mouse.SetPosition(Engine.instance.GraphicsDevice.Viewport.Width / 2, Engine.instance.GraphicsDevice.Viewport.Height / 2);
 			}
-			if(KeyboardIN.IsPressed(Keys.OemTilde))
+			if (KeyboardIN.IsPressed(Keys.OemTilde))
 			{
 				paused = !paused;
 			}
@@ -132,39 +133,53 @@ namespace IceThermical.EngineBase
 			{
 				bool needsReconstruction = extents != new Vector3(0.25f,0.25f,0.25f);
 
-				extents = new Vector3(0.25f, 0.25f, 0.25f);
-				boxOffset = Vector3.Down * 0.2f;
+				extents = new Vector3(0.25f, 0.4f, 0.25f);
+				boxOffset = Vector3.Down * 0.3f;
 
 				if(needsReconstruction)
 				{
 					box = new BoundingBox(position - extents + boxOffset, position + extents + boxOffset);
-					if (!grounded)
-						position += 0.25f * Vector3.Up;
 				}
 				crouching = true;
-				camera.camPos = position + Vector3.Up * 0.2f;
+				camera.camPos = position + Vector3.Up * 0.05f;
 			}
 			else
 			{
-				bool needsReconstruction = extents != new Vector3(0.25f, 0.5f, 0.25f);
+				bool needsReconstruction = extents != new Vector3(0.25f, 1f, 0.25f);
 
-				extents = new Vector3(0.25f, 0.5f, 0.25f);
-				boxOffset = Vector3.Down * 0.4f;
-
-				if (needsReconstruction)
+				if(CanUnCrouch())
 				{
-					box = new BoundingBox(position - extents + boxOffset, position + extents + boxOffset);
-					if(grounded)
-						position += 0.3f * Vector3.Up;
+					extents = new Vector3(0.25f, 1f, 0.25f);
+					boxOffset = Vector3.Down * 0.3f;
+
+					if (needsReconstruction)
+					{
+						box = new BoundingBox(position - extents + boxOffset, position + extents + boxOffset);
+						position += 0.6f * Vector3.Up;
+					}
+					crouching = false;
+					camera.camPos = position + Vector3.Up * 0.6f;
 				}
-				crouching = false;
-				camera.camPos = position + Vector3.Up * 0.8f;
+				else
+				{
+					needsReconstruction = extents != new Vector3(0.25f, 0.25f, 0.25f);
+
+					extents = new Vector3(0.25f, 0.4f, 0.25f);
+					boxOffset = Vector3.Down * 0.3f;
+
+					if (needsReconstruction)
+					{
+						box = new BoundingBox(position - extents + boxOffset, position + extents + boxOffset);
+					}
+					crouching = true;
+					camera.camPos = position + Vector3.Up * 0.05f;
+				}
 			}
 
 
 
-			wishDir = Vector3.Clamp(wishDir,-Vector3.One*1.4f * (crouching? 0.5f:((KeyboardIN.IsPressed(Keys.LeftShift) || padState.IsButtonDown(Buttons.LeftStick)) ? 2 : 1)),
-											Vector3.One*1.4f * (crouching ? 0.5f: ((KeyboardIN.IsPressed(Keys.LeftShift) || padState.IsButtonDown(Buttons.LeftStick)) ? 2 : 1)));
+			wishDir = Vector3.Clamp(wishDir,-Vector3.One*0.2f * (crouching? 0.5f:((KeyboardIN.IsPressed(Keys.LeftShift) || padState.IsButtonDown(Buttons.LeftStick)) ? 2 : 1)),
+											Vector3.One*0.2f * (crouching ? 0.5f: ((KeyboardIN.IsPressed(Keys.LeftShift) || padState.IsButtonDown(Buttons.LeftStick)) ? 2 : 1)));
 
 
 

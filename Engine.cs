@@ -3,6 +3,7 @@ using IceThermical.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 
@@ -68,6 +69,8 @@ namespace IceThermical
 			mapReader.LoadMap("Maps/map");
 
 			tex = Content.Load<Texture2D>("Textures/missing");
+			//Song song = Content.Load<Song>("Audio/Music/bleepbloopy");
+			//MediaPlayer.Play(song);
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -117,11 +120,15 @@ namespace IceThermical
 				effect.World = player.camera.worldMatrix;
 				effect.View = player.camera.viewMatrix;
 				effect.Projection = player.camera.projectionMatrix;
-				foreach (BoundingBox box in boxes)
+
+				List<BoundingBox> tovis = new List<BoundingBox>();
+				tovis.Add(player.box);
+				tovis.AddRange(boxes);
+
+				foreach (BoundingBox box in tovis)
 				{
 					VertexPosition[] c = new VertexPosition[8];
 
-					float l, w, h;
 					int i = 0;
 					foreach(Vector3 vec in box.GetCorners())
 					{

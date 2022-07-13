@@ -56,6 +56,12 @@
 /processorParam:TextureFormat=Color
 /build:../../../../OneDrive/Documents/missing.png;Textures/missing.png
 
+#begin E:/bleepbloopy.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:E:/bleepbloopy.ogg;Audio/Music/bleepbloopy.ogg
+
 #begin F:/dumbarm.dae
 /importer:FbxImporter
 /processor:ModelProcessor

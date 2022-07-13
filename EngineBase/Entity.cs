@@ -10,7 +10,7 @@ namespace IceThermical.EngineBase
 		public Vector3 velocity;
 		public float gravity;
 
-		protected BoundingBox box;
+		public BoundingBox box;
 
 		public bool grounded = false;
 		public bool isStatic = false;
@@ -61,6 +61,25 @@ namespace IceThermical.EngineBase
 				velocity = Vector3.Lerp(velocity, Vector3.Zero, (float)gt.ElapsedGameTime.TotalSeconds * 12);
 			}
 		}
+
+		public bool CanUnCrouch()
+		{
+			bool unable = false;
+			foreach (BoundingBox _box in Engine.instance.boxes) //temp, soon to implement blockmap
+			{
+				if (_box == box) continue; // dont collide with ourselves
+
+				box.Min = (position + new Vector3(0, 0.6f, 0)) - extents + boxOffset; //check for ceiling collision
+				box.Max = (position + new Vector3(0, 0.6f, 0)) + extents + boxOffset;
+
+				if (box.Intersects(_box)) //check collision
+				{
+					unable = true;
+				}
+			}
+			return !unable;
+		}
+
 		public void CollisionCheck(GameTime gt)
 		{
 			Vector3 pos = (velocity + (Vector3.Down * gravity)) * (float)gt.ElapsedGameTime.TotalSeconds;
@@ -75,16 +94,12 @@ namespace IceThermical.EngineBase
 
 				if (box.Intersects(_box)) //check collision
 				{
-					if (_box.Max.Y - box.Min.Y < 0.25f) //step up if applicable
+/*					if (MathF.Abs(_box.Max.Y - box.Min.Y) < 0.1f) //step up if applicable
 					{
-						position.Y += MathF.Abs(box.Min.Y - _box.Max.Y);
+						position.Y += MathF.Abs(_box.Max.Y - box.Max.Y);
 					}
-					else //else stop movement in this direction.
+					else //else stop movement in this direction.*/
 					{
-						if(MathF.Abs(box.Max.Y - _box.Min.Y) < 0.1f)
-						{
-							position.Y += MathF.Abs(box.Max.Y - _box.Min.Y);
-						}
 						pos.X = 0;
 						velocity.X = 0;
 					}
@@ -108,16 +123,25 @@ namespace IceThermical.EngineBase
 					grounded = false;
 				}
 
+				box.Min = (position + new Vector3(0, 0.1f, 0)) - new Vector3(0.25f,0.25f,0.25f); //check for ceiling collision
+				box.Max = (position + new Vector3(0, 0.1f, 0)) + new Vector3(0.25f,0.25f,0.25f);
+
+				if (box.Intersects(_box)) //check collision
+				{
+					gravity = 2;
+					pos.Y = -0.2f;
+				}
+
 				box.Min = (position + new Vector3(0, 0, pos.Z)) - extents + boxOffset; // z dir
 				box.Max = (position + new Vector3(0, 0, pos.Z)) + extents + boxOffset;
 
 				if (box.Intersects(_box)) // collision
 				{
-					if (_box.Max.Y - box.Min.Y < 0.25f) // step up
+/*					if (MathF.Abs(_box.Max.Y - box.Min.Y) < 0.1f) //step up if applicable
 					{
-						position.Y += MathF.Abs(box.Min.Y - _box.Max.Y);
+						position.Y += MathF.Abs(_box.Max.Y - box.Max.Y);
 					}
-					else // stop movement
+					else // stop movement*/
 					{
 						pos.Z = 0;
 						velocity.Z = 0;
