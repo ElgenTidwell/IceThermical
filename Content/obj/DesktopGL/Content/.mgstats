@@ -8,6 +8,6 @@ Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Siz
 "C:/Users/tidwe/source/repos/IceThermical/Content/Shaders/Textured.fx","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Shaders/Textured.xnb","EffectProcessor","CompiledEffectContent",2642,1924,0.463995
 "C:/Users/tidwe/source/repos/IceThermical/Content/Textures/bricktest.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Textures/bricktest.xnb","TextureProcessor","Texture2DContent",718,1342,1.2069294
 "C:/Users/tidwe/source/repos/IceThermical/Content/Textures/UVGrid.png","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Textures/UVGrid.xnb","TextureProcessor","Texture2DContent",40135,22411,2.128319
-"E:/bleepbloopy.ogg","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Audio/Music/bleepbloopy.xnb","SongProcessor","SongContent",427816,101,14.717421
+"E:/bleepbloopy.ogg","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Audio/Music/bleepbloopy.xnb","SongProcessor","SongContent",4924695,101,49.92365
 "F:/dumbarm.dae","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Models/dumbarm.xnb","ModelProcessor","ModelContent",95738,22180,0.2234822
 "F:/testlevel.dae","C:/Users/tidwe/source/repos/IceThermical/Content/bin/DesktopGL/Content/Models/testlevel.xnb","ModelProcessor","ModelContent",2563584,545759,0.4546476
